@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Builder
 @AllArgsConstructor
@@ -22,8 +25,19 @@ public class Tutorial {
             sequenceName = "tutorialIdSequence",
             allocationSize = 1
     )
+    @Column(name = "tutorial_id")
     private Long id;
     private String title;
     private String description;
     private boolean published;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "tutorial_tag",
+            joinColumns = { @JoinColumn(name = "tutorial_id") },
+            inverseJoinColumns = { @JoinColumn(name = "tag_id") })
+    private Set<Tag> tags = new HashSet<Tag>();
 }
