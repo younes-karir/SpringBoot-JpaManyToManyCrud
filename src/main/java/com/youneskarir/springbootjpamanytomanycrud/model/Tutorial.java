@@ -1,4 +1,4 @@
-package model;
+package com.youneskarir.springbootjpamanytomanycrud.model;
 
 
 import jakarta.persistence.*;
@@ -13,6 +13,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "tutorials")
 public class Tutorial {
     
     @Id
@@ -25,19 +26,27 @@ public class Tutorial {
             sequenceName = "tutorialIdSequence",
             allocationSize = 1
     )
-    @Column(name = "tutorial_id")
+
     private Long id;
     private String title;
     private String description;
     private boolean published;
+    
+    // setting up the relation
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             })
-    @JoinTable(name = "tutorial_tag",
-            joinColumns = { @JoinColumn(name = "tutorial_id") },
-            inverseJoinColumns = { @JoinColumn(name = "tag_id") })
+    @JoinTable(
+            name = "tutorials_tags",
+            joinColumns = {
+                    @JoinColumn(name = "tutorial_id") 
+            },
+            inverseJoinColumns = { 
+                    @JoinColumn(name = "tag_id")
+            }
+    )
     private Set<Tag> tags = new HashSet<Tag>();
 }

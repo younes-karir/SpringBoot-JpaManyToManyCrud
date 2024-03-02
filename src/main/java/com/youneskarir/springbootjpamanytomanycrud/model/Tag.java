@@ -1,4 +1,4 @@
-package model;
+package com.youneskarir.springbootjpamanytomanycrud.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,6 +14,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "tags")
 public class Tag {
     
     
@@ -36,7 +37,7 @@ public class Tag {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             },
-            mappedBy = "tag")
+            mappedBy = "tags")
     @JsonIgnore
     private Set<Tutorial> tutorials = new HashSet<>();
 }
