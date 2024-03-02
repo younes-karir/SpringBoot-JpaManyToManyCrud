@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3306/tutorials_tags
+    password:
+    username: root
+    
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+server:
+  port: 1000
