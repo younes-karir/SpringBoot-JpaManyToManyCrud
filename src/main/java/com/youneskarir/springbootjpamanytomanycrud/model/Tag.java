@@ -3,15 +3,15 @@ package com.youneskarir.springbootjpamanytomanycrud.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Builder
+@Data
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "tags")

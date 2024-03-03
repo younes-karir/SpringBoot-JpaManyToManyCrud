@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class TagRequest {
 
+    private Long id;
+    
     @NotEmpty(message = "name is empty ")
     @Size(min = 3, message ="name is less than 3 character" )
     private String name;
