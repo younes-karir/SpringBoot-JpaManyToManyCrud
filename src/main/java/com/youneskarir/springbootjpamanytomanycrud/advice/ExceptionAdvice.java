@@ -1,6 +1,9 @@
 package com.youneskarir.springbootjpamanytomanycrud.advice;
 
 
+import com.youneskarir.springbootjpamanytomanycrud.advice.exception.ElementAlreadyExistsException;
+import com.youneskarir.springbootjpamanytomanycrud.advice.exception.ElementNotFoundException;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -25,4 +28,19 @@ public class ExceptionAdvice {
                 
         return new ResponseEntity<>(data,HttpStatus.BAD_REQUEST);
     }
+    
+    @ExceptionHandler(ElementNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Object> HandleElementNotFoundException(ElementNotFoundException exception){
+        
+        return new ResponseEntity<>(exception.getMessage(),HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ElementAlreadyExistsException.class)
+    public ResponseEntity<Object> HandleElementAlreadyExistsException (ElementAlreadyExistsException exception){
+        return new ResponseEntity<>(exception.getMessage(),HttpStatus.NOT_ACCEPTABLE);
+    }
+
+
+
 }
