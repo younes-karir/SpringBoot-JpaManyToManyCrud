@@ -11,7 +11,7 @@ public class ResponseHandler {
     
     
     
-    public ResponseEntity<Object>  build(String message, HttpStatus status, Object object)
+    public static  ResponseEntity<Object>  build(String message, HttpStatus status, Object object)
     {
         Map<String,Object> data =  new HashMap<>();
         data.put("message",message);
