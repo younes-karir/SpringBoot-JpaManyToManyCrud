@@ -48,6 +48,16 @@ public class TutorialController {
     }
     
     
+    @GetMapping("{id}/tags")
+    public ResponseEntity<Object> getAllTutorialTags(@PathVariable Long id){
+        return ResponseHandler.build(
+                "list of tutorials tags",
+                HttpStatus.OK,
+                tutorialService.getAllTags(id)
+        );
+    }
+    
+    
     
     
 }
