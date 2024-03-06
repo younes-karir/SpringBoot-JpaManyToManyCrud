@@ -15,7 +15,6 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tutorials")
 public class Tutorial {
     
     @Id
@@ -28,7 +27,6 @@ public class Tutorial {
             sequenceName = "tutorialIdSequence",
             allocationSize = 1
     )
-
     private Long id;
     private String title;
     private String description;
@@ -36,13 +34,11 @@ public class Tutorial {
     
     // setting up the relation
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
+    @ManyToMany(
+            fetch = FetchType.EAGER,
+            cascade ={CascadeType.MERGE,CascadeType.PERSIST})
     @JoinTable(
-            name = "tutorials_tags",
+            name = "tutorial_tag",
             joinColumns = {
                     @JoinColumn(name = "tutorial_id") 
             },
@@ -51,4 +47,8 @@ public class Tutorial {
             }
     )
     private Set<Tag> tags = new HashSet<>();
+    
+    
+    
+    
 }

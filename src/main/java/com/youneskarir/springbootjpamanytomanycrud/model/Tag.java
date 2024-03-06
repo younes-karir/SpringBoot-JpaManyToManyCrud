@@ -14,7 +14,6 @@ import java.util.Set;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tags")
 public class Tag {
     
     
@@ -27,17 +26,10 @@ public class Tag {
             generator = "tagIdSequence",
             strategy = GenerationType.SEQUENCE
     )
-    @Column(name = "tag_id")
     private Long id;
     private String name;
 
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
-            mappedBy = "tags")
-    @JsonIgnore
+    @ManyToMany(mappedBy = "tags")
     private Set<Tutorial> tutorials = new HashSet<>();
 }
