@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -21,7 +22,7 @@ public class TagServiceImpl implements TagService {
     private TutorialRepository tutorialRepository;
     
     @Override
-    public Tag createTag(Long tutorialId, TagRequest request) {
+    public Tutorial createTag(Long tutorialId, TagRequest request) {
         if(tutorialRepository.findById(tutorialId).isEmpty())
             throw new ElementNotFoundException("tutorial not found");
         else {
@@ -32,7 +33,8 @@ public class TagServiceImpl implements TagService {
                         .name(request.getName())
                         .build();
                 tutorial.getTags().add(tag);
-                return tagRepository.save(tag);
+                //return tagRepository.save(tag);
+                return  tutorial;
             } 
             else if (tagRepository.findById(request.getId()).isEmpty()) 
                 throw new ElementNotFoundException("tag not found");
@@ -42,8 +44,8 @@ public class TagServiceImpl implements TagService {
                 if(!tagRepository.findByTutorialId(tutorialId).isEmpty()) throw new ElementAlreadyExistsException("tutorial already have the tag");
                 else {
                     tutorial.getTags().add(tag);
-                    tutorialRepository.save(tutorial);
-                    return tag;
+                    
+                    return tutorialRepository.save(tutorial);
                 }
             }
         }
@@ -84,6 +86,11 @@ public class TagServiceImpl implements TagService {
     public List<Tutorial> getTagTutorials(Long id) {
         return null;
         //return tagRepository.findById(id).get().getTutorials().stream().toList();
+    }
+
+    @Override
+    public Object getTutorial(Long id) {
+        return tutorialRepository.findById(id).get().getTags();
     }
 
 

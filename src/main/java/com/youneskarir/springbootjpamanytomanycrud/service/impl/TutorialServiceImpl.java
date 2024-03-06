@@ -8,6 +8,7 @@ import com.youneskarir.springbootjpamanytomanycrud.model.Tag;
 import com.youneskarir.springbootjpamanytomanycrud.model.Tutorial;
 import com.youneskarir.springbootjpamanytomanycrud.repository.TutorialRepository;
 import com.youneskarir.springbootjpamanytomanycrud.service.TutorialService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -61,16 +62,18 @@ public class TutorialServiceImpl implements TutorialService {
         }
         
     }
-
-    @Override
+    
+   @Override
     public Tutorial getTutorial(Long id) {
         if(tutorialRepository.findById(id).isEmpty()) throw  new ElementNotFoundException("tutorial not found");
         else {
-            System.out.println(tutorialRepository.findByIdWithTags(id));
-            return tutorialRepository.findByIdWithTags(id).get();
+            System.out.println(tutorialRepository.findById(id));
+            return tutorialRepository.findById(id).get();
         }
     }
 
+
+    
     @Override
     public List<TutorialResponse> getAll() {
         return tutorialRepository.findAllTutorialsDTO();
