@@ -8,9 +8,11 @@ import com.youneskarir.springbootjpamanytomanycrud.model.Tutorial;
 import com.youneskarir.springbootjpamanytomanycrud.repository.TagRepository;
 import com.youneskarir.springbootjpamanytomanycrud.repository.TutorialRepository;
 import com.youneskarir.springbootjpamanytomanycrud.service.TagService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,8 +35,8 @@ public class TagServiceImpl implements TagService {
                         .name(request.getName())
                         .build();
                 tutorial.getTags().add(tag);
-                //return tagRepository.save(tag);
-                return  tutorial;
+                return tutorialRepository.save(tutorial);
+                
             } 
             else if (tagRepository.findById(request.getId()).isEmpty()) 
                 throw new ElementNotFoundException("tag not found");
@@ -44,7 +46,6 @@ public class TagServiceImpl implements TagService {
                 if(!tagRepository.findByTutorialId(tutorialId).isEmpty()) throw new ElementAlreadyExistsException("tutorial already have the tag");
                 else {
                     tutorial.getTags().add(tag);
-                    
                     return tutorialRepository.save(tutorial);
                 }
             }

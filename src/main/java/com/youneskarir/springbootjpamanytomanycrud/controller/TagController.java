@@ -29,11 +29,4 @@ public class TagController {
                 tagService.createTag(id,request)
         );
     }
-    
-    
-    @GetMapping("testing/{id}")
-    public Object getTutorial(@PathVariable Long id){
-        return tagService.getTutorial(id);
-    }
-    
 }
