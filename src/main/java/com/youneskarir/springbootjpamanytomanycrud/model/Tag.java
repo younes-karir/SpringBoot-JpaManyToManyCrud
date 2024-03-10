@@ -9,27 +9,28 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 @Builder
-@Data
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Tag {
     
     
     @Id
-    @SequenceGenerator(
-            name = "tagIdSequence",
-            allocationSize = 1
-    )
     @GeneratedValue(
-            generator = "tagIdSequence",
-            strategy = GenerationType.SEQUENCE
+            strategy = GenerationType.SEQUENCE,
+            generator = "tag_sequence"
+    )
+    @SequenceGenerator(
+            name = "tag_sequence",
+            sequenceName = "tag_sequence"
     )
     private Long id;
     private String name;
 
 
     @ManyToMany(mappedBy = "tags")
-    private Set<Tutorial> tutorials = new HashSet<>();
+    @JsonIgnore
+    private Set<Tutorial> tutorials ;
 }

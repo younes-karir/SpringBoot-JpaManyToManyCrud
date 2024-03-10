@@ -2,31 +2,25 @@ package com.youneskarir.springbootjpamanytomanycrud.model;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 @Builder
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Tutorial {
     
     @Id
     @GeneratedValue(
-            generator = "tutorialIdSequence",
-            strategy = GenerationType.SEQUENCE
-    )
-    @SequenceGenerator(
-            name = "tutorialIdSequence",
-            sequenceName = "tutorialIdSequence",
-            allocationSize = 1
-    )
+            strategy = GenerationType.SEQUENCE, 
+            generator = "tutorial_sequence")
+    @SequenceGenerator(name = "tutorial_sequence", 
+            sequenceName = "tutorial_sequence")
     private Long id;
     private String title;
     private String description;
@@ -35,7 +29,6 @@ public class Tutorial {
     // setting up the relation
 
     @ManyToMany(
-            fetch = FetchType.EAGER,
             cascade ={CascadeType.MERGE,CascadeType.PERSIST})
     @JoinTable(
             name = "tutorial_tag",
@@ -46,9 +39,6 @@ public class Tutorial {
                     @JoinColumn(name = "tag_id")
             }
     )
-    private Set<Tag> tags = new HashSet<>();
-    
-    
-    
+    private Set<Tag> tags ;
     
 }
