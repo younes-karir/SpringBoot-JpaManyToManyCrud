@@ -12,19 +12,17 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class TutorialServiceImpl implements TutorialService {
     
     
     private TutorialRepository tutorialRepository;
-    
-    
-    
+
+
     
     @Override
     public Tutorial createTutorial(TutorialRequest request) {
@@ -41,26 +39,25 @@ public class TutorialServiceImpl implements TutorialService {
         if(tutorialRepository.findById(id).isEmpty()) throw  new ElementNotFoundException("tutorial not found");
         else{
             Tutorial tutorial = tutorialRepository.findById(id).get();
-            tutorial.setDescription(request.getDescription());
-            tutorial.setTitle(request.getTitle());
+            if(request.getTitle()!=null) tutorial.setTitle(request.getTitle());
+            if(request.getDescription()!=null) tutorial.setDescription(request.getDescription());
             return tutorialRepository.save(tutorial);
         }
     }
 
     @Override
     public List<Tag> getAllTags(Long tutorialId) {
-        return tutorialRepository.findByTutorialId(tutorialId);
+        return tutorialRepository.findById(tutorialId).get().getTags().stream().toList();
     }
 
     @Override
-    public Tutorial deleteTutorial(Long id) {
+    public Object deleteTutorial(Long id) {
         if(tutorialRepository.findById(id).isEmpty()) throw  new ElementNotFoundException("tutorial not found");
         else {
-            Tutorial  tutorial = tutorialRepository.findById(id).get();
-            tutorialRepository.delete(tutorial);
-            return tutorial;
+            tutorialRepository.deleteById(id);
         }
-        
+
+        return null;
     }
     
    @Override
@@ -87,6 +84,7 @@ public class TutorialServiceImpl implements TutorialService {
             Tutorial tutorial = tutorialRepository.findById(tutorialId).get();
             Tag tag = tutorialRepository.findByTutorialIdAndTagId(tutorialId,TagId);
             tutorial.getTags().remove(tag);
+            tutorialRepository.save(tutorial);
             return tag;
         }
     }
