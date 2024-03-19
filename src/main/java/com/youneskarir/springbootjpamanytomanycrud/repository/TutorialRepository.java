@@ -18,8 +18,8 @@ public interface TutorialRepository extends JpaRepository<Tutorial,Long> {
 
 
     
-    @Query("SELECT t FROM Tag t JOIN t.tutorials tutorial WHERE tutorial.id = :id")
-    List<Tag> findByTutorialId(@Param("id") Long id);
+//    @Query("SELECT t FROM Tag t JOIN t.tutorials tutorial WHERE tutorial.id = :id")
+  //  List<Tag> findByTutorialId(@Param("id") Long id);
 
     
     @Query("SELECT t FROM Tag t JOIN t.tutorials tutorial " +
