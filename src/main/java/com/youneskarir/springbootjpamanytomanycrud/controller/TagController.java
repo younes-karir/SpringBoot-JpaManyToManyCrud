@@ -29,4 +29,9 @@ public class TagController {
                 tagService.createTag(id,request)
         );
     }
+    
+    @GetMapping("tags/{id}")
+    public ResponseEntity<Object> getTag(@PathVariable Long id){
+        return ResponseHandler.build("tag details",HttpStatus.OK,tagService.getTag(id));
+    }
 }
